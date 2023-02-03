@@ -32,7 +32,27 @@ const getAllClients = async (req, res, next) => {
   }
 }
 
+const editClient = async (req, res, next) => {
+  // Obtiene un estudiante por id
+
+  try {
+    const { id } = req.params;
+    const { cl_name, cl_lastname, cl_email, cl_ident, cl_address } = req.body;
+
+    const result = await pool.query(
+      "UPDATE clients SET cl_name = $1, cl_lastname = $2,  cl_email = $3, cl_ident = $4, cl_address = $5 WHERE client_id = $6",
+      [cl_name, cl_lastname, cl_email, cl_ident, cl_address, id]
+    );
+
+    return res.json(result.rows[0]);
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createClient,
-  getAllClients
+  getAllClients,
+  editClient
 }

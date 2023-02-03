@@ -1,12 +1,15 @@
-// Create and configure backend routes
+// BACKEND ROUTES AND CALL TO CONTROLLERS
 
 const { Router } = require('express');
 const router = Router();
 
+//---------------------------------------IMPORT-CONTROLLERS------------------------------------//
+
 // CLIENTS CONTROLLERS
 const {
   createClient,
-  getAllClients
+  getAllClients,
+  editClient
 } = require('../controllers/clients.controllers');
 
 
@@ -26,46 +29,45 @@ const {
 // USERS CONTROLLERS
 const {
   createUser,
-  getAllUsers
+  getAllUsers,
+  editUser
 } = require('../controllers/users.controllers')
 
 
-// CLIENTS ROUTES
+//---------------------------------------------ROUTES----------------------------------------//
 
+
+// CLIENTS ROUTES
 // create a client
 router.post('/clients', createClient)
 // get all clients
 router.get('/clients', getAllClients)
-
-
+// edit a client
+router.put('/clients/:id', editClient)
 
 
 // DB ROUTES
 
 
-
 // PRODUCTS ROUTES
-
 // create a product
 router.post('/products', createProduct)
 // get all products
 router.get('/products', getAllProducts)
-// get a prodcut
-router.put('/products/:id' , editProduct)
+// edit a prodcut
+router.put('/products/:id', editProduct)
 
 
 // QUOTATIONS ROUTES
 
 
-
 // USERS ROUTES
-
 // create a user
 router.post('/users', createUser)
 // get all users
 router.get('/users', getAllUsers)
+// edit user
+router.put('/users/:id', editUser)
 
-
-console.log()
 
 module.exports = router;
