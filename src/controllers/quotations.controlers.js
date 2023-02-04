@@ -8,7 +8,8 @@ const getAllQuotations = async (req, res, next) => {
       const result = await pool.query(`
                   SELECT 
                       quotations.qu_ident, 
-                      quotations.qu_created,
+                      TO_CHAR(quotations.qu_created, 'DD-MM-YYYY'),
+                      quotations.qu_value,
                       users.us_name,
                       users.us_lastname, 
                       clients.cl_name,
