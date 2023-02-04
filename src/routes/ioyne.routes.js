@@ -23,8 +23,8 @@ const {
   editProduct
 } = require('../controllers/products.controllers');
 
-//quotations controllers
-//const { } = require('../controllers/quotations.controllers')
+//QUOTATIONS CONTROLLERS
+const { getAllQuotations } = require('../controllers/quotations.controlers')
 
 // USERS CONTROLLERS
 const {
@@ -59,6 +59,9 @@ router.put('/products/:id', editProduct)
 
 
 // QUOTATIONS ROUTES
+// get all quotations
+router.get('/quotations', getAllQuotations)
+
 
 
 // USERS ROUTES
