@@ -31,5 +31,6 @@ CREATE TABLE quotations (
 	product_id INT REFERENCES products (product_id),
   user_id INT REFERENCES users (user_id),
   qu_created DATE DEFAULT CURRENT_DATE, 
-  qu_value FLOAT
+  qu_value FLOAT,
+  qu_ident VARCHAR(30)
 )
