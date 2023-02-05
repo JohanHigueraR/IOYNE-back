@@ -21,7 +21,3 @@ Use this command to start the server in your local repository
 ## Course
 
 this project was created during the course fullstack web development by [ENYOI](https://www.enyoi.co/)
-
-## Prueba
-
-Esto es una prueba para el repositorio local de Johan otra vez
