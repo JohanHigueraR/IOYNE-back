@@ -34,3 +34,9 @@ CREATE TABLE quotations (
   qu_value FLOAT,
   qu_ident VARCHAR(30)
 )
+CREATE TABLE requested_products (
+  req_id SERIAL PRIMARY KEY,
+  product_id INT REFERENCES products (product_id),
+  quotation_id INT REFERENCES quotations (quotation_id),
+  quantity SMALLINT
+)
