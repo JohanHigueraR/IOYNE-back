@@ -30,7 +30,8 @@ const { getAllQuotations } = require('../controllers/quotations.controlers')
 const {
   createUser,
   getAllUsers,
-  editUser
+  editUser,
+  getLoggedUser
 } = require('../controllers/users.controllers')
 
 
@@ -71,6 +72,8 @@ router.post('/users', createUser)
 router.get('/users', getAllUsers)
 // edit user
 router.put('/users/:id', editUser)
+// validate logged user
+router.put('/login', getLoggedUser )
 
 
 module.exports = router;
