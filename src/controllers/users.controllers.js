@@ -1,4 +1,5 @@
 const pool = require('../db');
+var Hashes = require("jshashes");
 
 const createUser = async (req, res, next) => {
 
@@ -12,7 +13,7 @@ const createUser = async (req, res, next) => {
   try {
     const result = await pool.query(
       `INSERT INTO users (us_name, us_lastname, us_email, us_password, us_admin) 
-      VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+      VALUES ($1, $2, $3, encode(digest($4, 'sha1'), 'hex'), $5) RETURNING *`,
       [us_name, us_lastname, us_email, us_password, admin]
     )
 
@@ -63,8 +64,37 @@ const editUser = async (req, res, next) => {
 };
 
 
+const getLoggedUser = async (req, res, next) => {
+
+  var SHA1 = new Hashes.SHA1();
+  var logged = false
+  var user = 'User not found'
+
+  try {
+    const { us_email, us_password } = req.body;
+    const login = await pool.query("SELECT * FROM users");
+    console.log('esta validando')
+
+    login.rows.map((row) => {
+
+      if (row.us_password == SHA1.hex(us_password) &&
+        us_email == row.us_email) {
+          logged = true 
+          user = row
+        }
+    })
+
+    res.json(user);
+
+  } catch (error) {
+    res.json({ error: error.message });
+    console.log({ error: error.message })
+  }
+}
+
 module.exports = {
   createUser,
   getAllUsers,
-  editUser
+  editUser,
+  getLoggedUser
 }

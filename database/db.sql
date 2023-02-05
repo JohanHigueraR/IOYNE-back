@@ -28,9 +28,15 @@ CREATE TABLE users (
 CREATE TABLE quotations (
   quotation_id SERIAL PRIMARY KEY,
 	client_id INT REFERENCES clients (client_id),
-	product_id INT REFERENCES products (product_id),
+	req_id INT REFERENCES requested_products (req_id),
   user_id INT REFERENCES users (user_id),
   qu_created DATE DEFAULT CURRENT_DATE, 
   qu_value FLOAT,
   qu_ident VARCHAR(30)
-)
+);
+CREATE TABLE requested_products (
+  req_id SERIAL PRIMARY KEY,
+  product_id INT REFERENCES products (product_id),
+  quotation_id INT REFERENCES quotations (quotation_id),
+  quantity SMALLINT
+) 
