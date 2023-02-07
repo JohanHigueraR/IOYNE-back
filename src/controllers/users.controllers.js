@@ -57,37 +57,39 @@ const editUser = async (req, res, next) => {
 
 var loginAttempt = 0;
 var bloqueados = [];
-var error = "";
+
+
 const getLoggedUser = async (req, res, next) => {
+
   var SHA1 = new Hashes.SHA1();
-  var logged = false;
-  var user = "User not found";
+
   try {
     const { us_email, us_password } = req.body;
-    const login = await pool.query("SELECT * FROM users");
+    const users = await pool.query("SELECT * FROM users");
+
     if (loginAttempt === 3) {   
       bloqueados.push(us_email);
-      error = "Cuenta bloqueada por 2 horas";
+      
       setTimeout(() => {
         const index = bloqueados.indexOf(us_email);
         bloqueados.splice(index, 1);
-        error = "";
       }, 72000000);
+
       res.json("cuenta bloqueada por dos horas")
     }
-    login.rows.map((row) => {
+
+    users.rows.map((row) => {
       if (us_email == row.us_email && !bloqueados.includes(us_email)) {
         if (row.us_password == SHA1.hex(us_password)) {
-          logged = true;
-          user = row;
-          res.json(user);
+          var loggedUser = row;
+          res.json(loggedUser);
         } else {
           loginAttempt++;
-          res.json("errores" + loginAttempt);
+          res.json("contraseña incorrecta");
         }
-        console.log("Errores: " + loginAttempt);
       }
     });
+
   } catch (error) {
     res.json({ error: error.message });
     console.log({ error: error.message });
