@@ -1,9 +1,7 @@
 const pool = require("../db");
 
 const getAllQuotations = async (req, res, next) => {
-
-  // Obtener listado de todos las notas
-
+    
   try {
       const result = await pool.query(`
                   SELECT 

@@ -66,6 +66,9 @@ const getLoggedUser = async (req, res, next) => {
   try {
     const { us_email, us_password } = req.body;
     const users = await pool.query("SELECT * FROM users");
+    setTimeout(() => {
+      loginAttempt=0
+    }, 120000);
 
     if (loginAttempt === 3) {   
       bloqueados.push(us_email);
@@ -74,6 +77,7 @@ const getLoggedUser = async (req, res, next) => {
         const index = bloqueados.indexOf(us_email);
         bloqueados.splice(index, 1);
       }, 72000000);
+      
 
       res.json("cuenta bloqueada por dos horas")
     }

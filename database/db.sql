@@ -39,4 +39,5 @@ CREATE TABLE requested_products (
   product_id INT REFERENCES products (product_id),
   quotation_id INT REFERENCES quotations (quotation_id),
   quantity SMALLINT
+  
 ) 
