@@ -23,8 +23,17 @@ const {
   editProduct
 } = require('../controllers/products.controllers');
 
+// REQUESTED PRODUCT CONTROLLERS
+
+const { createReqProduct } = require('../controllers/requested_products.controllers');
+
+
 //QUOTATIONS CONTROLLERS
-const { getAllQuotations } = require('../controllers/quotations.controlers')
+const {
+  getAllQuotations,
+  getIdentQuotation
+} = require('../controllers/quotations.controlers');
+
 
 // USERS CONTROLLERS
 const {
@@ -58,10 +67,16 @@ router.get('/products', getAllProducts)
 // edit a prodcut
 router.put('/products/:id', editProduct)
 
+// REQUESTED PRODUCTS
+//  create requested product
+router.post('/requestedproduct', createReqProduct)
+
 
 // QUOTATIONS ROUTES
 // get all quotations
 router.get('/quotations', getAllQuotations)
+// get biggest qu_ident
+router.get('/quotations/ident', getIdentQuotation)
 
 
 
@@ -73,7 +88,7 @@ router.get('/users', getAllUsers)
 // edit user
 router.put('/users/:id', editUser)
 // validate logged user
-router.put('/login', getLoggedUser )
+router.put('/login', getLoggedUser)
 
 
 module.exports = router;
