@@ -45,6 +45,24 @@ const createQuotation = async (req, res, next) => {
     }
 }
 
+const createFinalQuotation = async (req, res, next) => {
+
+    const { qu_value, qu_ident } = req.body;
+
+    try {
+
+        const result = await pool.query(
+            `UPDATE quotations SET qu_value = $1 WHERE qu_ident = $2`
+            , [qu_value, qu_ident]
+        );
+
+        return res.json(result.rows[0])
+
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 const getIdentQuotation = async (req, res, next) => {
 
@@ -54,7 +72,9 @@ const getIdentQuotation = async (req, res, next) => {
                   ORDER BY qu_ident DESC LIMIT 1
                   `
         )
-        res.json(result.rows)
+
+        return res.json(result.rows[0])
+
     } catch (error) {
         next(error)
     }
@@ -64,5 +84,6 @@ const getIdentQuotation = async (req, res, next) => {
 module.exports = {
     getAllQuotations,
     createQuotation,
-    getIdentQuotation
+    getIdentQuotation,
+    createFinalQuotation
 }

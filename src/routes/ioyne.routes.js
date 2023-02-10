@@ -32,7 +32,8 @@ const { createReqProduct } = require('../controllers/requested_products.controll
 const {
   getAllQuotations,
   getIdentQuotation,
-  createQuotation
+  createQuotation,
+  createFinalQuotation
 } = require('../controllers/quotations.controlers');
 
 
@@ -80,6 +81,8 @@ router.get('/quotations', getAllQuotations)
 router.get('/quotations/ident', getIdentQuotation)
 // create quotations
 router.post('/quotations', createQuotation)
+// create final quotation
+router.put('/quotations', createFinalQuotation)
 
 
 
