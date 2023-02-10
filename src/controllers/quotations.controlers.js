@@ -81,9 +81,42 @@ const getIdentQuotation = async (req, res, next) => {
 }
 
 
+const getQuotationForEdit = async (req, res, next) => {
+
+    const { qu_ident } = req.body;
+   
+    try {
+        const result = await pool.query(`
+        SELECT 	
+        quotations.client_id,
+        clients.cl_name,
+        clients.cl_lastname,
+        clients.cl_email,
+		requested_products.quantity,
+		products.pd_name,
+		products.pd_price
+        FROM quotations 
+        LEFT JOIN clients 
+        ON quotations.client_id = clients.client_id
+        LEFT JOIN requested_products 
+        ON   quotations.qu_ident = requested_products.qu_ident
+        LEFT JOIN products
+        ON requested_products.product_id = products.product_id
+        WHERE quotations.qu_ident = $1`, [qu_ident]          
+        )
+
+        res.json(result.rows)
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 module.exports = {
     getAllQuotations,
     createQuotation,
     getIdentQuotation,
-    createFinalQuotation
+    createFinalQuotation,
+    getQuotationForEdit
 }

@@ -33,7 +33,8 @@ const {
   getAllQuotations,
   getIdentQuotation,
   createQuotation,
-  createFinalQuotation
+  createFinalQuotation,
+  getQuotationForEdit
 } = require('../controllers/quotations.controlers');
 
 
@@ -83,6 +84,8 @@ router.get('/quotations/ident', getIdentQuotation)
 router.post('/quotations', createQuotation)
 // create final quotation
 router.put('/quotations', createFinalQuotation)
+// get quotation dara for edition
+router.put('/quotations/edit', getQuotationForEdit)
 
 
 
