@@ -12,7 +12,6 @@ CREATE TABLE products (
   pd_name VARCHAR(255) NOT NULL,
   pd_description VARCHAR(255) NOT NULL,
   pd_price FLOAT,
-  pd_image VARCHAR(200)
   UNIQUE (pd_name)
 );
 CREATE TABLE users (
@@ -32,12 +31,12 @@ CREATE TABLE quotations (
   user_id INT REFERENCES users (user_id),
   qu_created DATE DEFAULT CURRENT_DATE, 
   qu_value FLOAT,
-  qu_ident VARCHAR(30)
+  qu_ident VARCHAR(30) UNIQUE
 );
 CREATE TABLE requested_products (
   req_id SERIAL PRIMARY KEY,
   product_id INT REFERENCES products (product_id),
-  quotation_id INT REFERENCES quotations (quotation_id),
   quantity SMALLINT
+  qu_ident VARCHAR(30) REFERENCES quotations (qu_ident)
   
 ) 
