@@ -31,7 +31,8 @@ const { createReqProduct } = require('../controllers/requested_products.controll
 //QUOTATIONS CONTROLLERS
 const {
   getAllQuotations,
-  getIdentQuotation
+  getIdentQuotation,
+  createQuotation
 } = require('../controllers/quotations.controlers');
 
 
@@ -77,6 +78,8 @@ router.post('/requestedproduct', createReqProduct)
 router.get('/quotations', getAllQuotations)
 // get biggest qu_ident
 router.get('/quotations/ident', getIdentQuotation)
+// create quotations
+router.post('/quotations', createQuotation)
 
 
 

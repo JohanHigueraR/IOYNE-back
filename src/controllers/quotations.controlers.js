@@ -29,7 +29,16 @@ const getAllQuotations = async (req, res, next) => {
 
 const createQuotation = async (req, res, next) => {
 
+    const { qu_ident, user_id, client_id } = req.body;
+
     try {
+
+        const result = await pool.query(
+            `INSERT INTO quotations (qu_ident, user_id, client_id) VALUES ($1, $2, $3)`
+            , [qu_ident, user_id, client_id]
+        )
+
+        res.json(result.rows)
 
     } catch (error) {
         next(error)
