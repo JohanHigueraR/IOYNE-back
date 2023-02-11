@@ -26,6 +26,7 @@ const {
 // REQUESTED PRODUCT CONTROLLERS
 
 const { createReqProduct } = require('../controllers/requested_products.controllers');
+const { deleteReqProduct } = require('../controllers/requested_products.controllers');
 
 
 //QUOTATIONS CONTROLLERS
@@ -73,6 +74,7 @@ router.put('/products/:id', editProduct)
 // REQUESTED PRODUCTS
 //  create requested product
 router.post('/requestedproduct', createReqProduct)
+router.delete('/requestedproduct', deleteReqProduct)
 
 
 // QUOTATIONS ROUTES

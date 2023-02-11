@@ -92,9 +92,12 @@ const getQuotationForEdit = async (req, res, next) => {
         clients.cl_name,
         clients.cl_lastname,
         clients.cl_email,
+        clients.cl_address,
 		requested_products.quantity,
+		requested_products.product_id,
 		products.pd_name,
-		products.pd_price
+		products.pd_price,
+		products.pd_description
         FROM quotations 
         LEFT JOIN clients 
         ON quotations.client_id = clients.client_id
