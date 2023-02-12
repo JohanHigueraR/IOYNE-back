@@ -48,6 +48,10 @@ const {
   getLoggedUser
 } = require('../controllers/users.controllers')
 
+// EMAIL CONTROLLER
+
+const { createEmail } = require('../controllers/email.controller')
+
 
 //---------------------------------------------ROUTES----------------------------------------//
 
@@ -93,7 +97,6 @@ router.put('/quotations/edit', getQuotationForEdit)
 router.put('/dashboard', getQuotationValueForDay)
 
 
-
 // USERS ROUTES
 // create a user
 router.post('/users', createUser)
@@ -103,6 +106,11 @@ router.get('/users', getAllUsers)
 router.put('/users/:id', editUser)
 // validate logged user
 router.put('/login', getLoggedUser)
+
+
+// EMAIL ROUTE
+router.post('/email', createEmail)
+
 
 
 module.exports = router;
