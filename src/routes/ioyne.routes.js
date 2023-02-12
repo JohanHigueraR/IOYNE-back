@@ -35,7 +35,8 @@ const {
   getIdentQuotation,
   createQuotation,
   createFinalQuotation,
-  getQuotationForEdit
+  getQuotationForEdit,
+  getQuotationValueForDay
 } = require('../controllers/quotations.controlers');
 
 
@@ -88,6 +89,8 @@ router.post('/quotations', createQuotation)
 router.put('/quotations', createFinalQuotation)
 // get quotation dara for edition
 router.put('/quotations/edit', getQuotationForEdit)
+// get quotation value for day
+router.put('/dashboard', getQuotationValueForDay)
 
 
 

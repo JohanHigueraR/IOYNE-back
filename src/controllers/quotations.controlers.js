@@ -79,6 +79,20 @@ const getIdentQuotation = async (req, res, next) => {
         next(error)
     }
 }
+const getQuotationValueForDay = async (req, res, next) => {
+
+    const {qu_created} = req.body;
+    try {
+        const result = await pool.query('SELECT SUM(qu_value) FROM quotations WHERE qu_created = $1',[qu_created]
+        )
+
+        res.json(result.rows)
+        console.log(result.rows)
+
+    } catch (error) {
+        next(error)
+    }
+}
 
 
 const getQuotationForEdit = async (req, res, next) => {
@@ -121,5 +135,6 @@ module.exports = {
     createQuotation,
     getIdentQuotation,
     createFinalQuotation,
-    getQuotationForEdit
+    getQuotationForEdit,
+    getQuotationValueForDay
 }
