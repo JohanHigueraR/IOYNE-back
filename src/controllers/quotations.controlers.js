@@ -3,23 +3,23 @@ const pool = require("../db");
 const getAllQuotations = async (req, res, next) => {
 
     try {
-        const result = await pool.query(`
-                  SELECT 
-                      quotations.qu_ident, 
-                      TO_CHAR(quotations.qu_created, 'DD-MM-YYYY'),
-                      quotations.qu_value,
-                      users.us_name,
-                      users.us_lastname, 
-                      clients.cl_name,
-                      clients.cl_lastname,
-                      clients.cl_email
-                  FROM 
-                      quotations 
-                  LEFT JOIN users 
-                      ON quotations.user_id = users.user_id 
-                  LEFT JOIN clients 
-                      ON quotations.client_id = clients.client_id
-                  `
+        const result = await pool.query(
+            `SELECT 
+            quotations.qu_ident, 
+            TO_CHAR(quotations.qu_created, 'DD-MM-YYYY'),
+            quotations.qu_value,
+            users.us_name,
+            users.us_lastname, 
+            clients.cl_name,
+            clients.cl_lastname,
+            clients.cl_email
+            FROM 
+            quotations 
+            LEFT JOIN users 
+            ON quotations.user_id = users.user_id 
+            LEFT JOIN clients 
+            ON quotations.client_id = clients.client_id
+            `
         )
         res.json(result.rows)
     } catch (error) {
@@ -67,10 +67,9 @@ const createFinalQuotation = async (req, res, next) => {
 const getIdentQuotation = async (req, res, next) => {
 
     try {
-        const result = await pool.query(`
-                  SELECT qu_ident FROM quotations 
-                  ORDER BY qu_ident DESC LIMIT 1
-                  `
+        const result = await pool.query(
+            `SELECT qu_ident FROM quotations 
+            ORDER BY qu_ident DESC LIMIT 1`
         )
 
         return res.json(result.rows[0])
@@ -81,9 +80,11 @@ const getIdentQuotation = async (req, res, next) => {
 }
 const getQuotationValueForDay = async (req, res, next) => {
 
-    const {qu_created} = req.body;
+    const { qu_created } = req.body;
+
+
     try {
-        const result = await pool.query('SELECT SUM(qu_value) FROM quotations WHERE qu_created = $1',[qu_created]
+        const result = await pool.query('SELECT SUM(qu_value) FROM quotations WHERE qu_created = $1', [qu_created]
         )
 
         res.json(result.rows)
@@ -98,7 +99,7 @@ const getQuotationValueForDay = async (req, res, next) => {
 const getQuotationForEdit = async (req, res, next) => {
 
     const { qu_ident } = req.body;
-   
+
     try {
         const result = await pool.query(`
         SELECT 	
@@ -119,7 +120,7 @@ const getQuotationForEdit = async (req, res, next) => {
         ON   quotations.qu_ident = requested_products.qu_ident
         LEFT JOIN products
         ON requested_products.product_id = products.product_id
-        WHERE quotations.qu_ident = $1`, [qu_ident]          
+        WHERE quotations.qu_ident = $1`, [qu_ident]
         )
 
         res.json(result.rows)
