@@ -88,7 +88,7 @@ const getQuotationValueForDay = async (req, res, next) => {
         )
 
         res.json(result.rows)
-        console.log(result.rows)
+        
 
     } catch (error) {
         next(error)

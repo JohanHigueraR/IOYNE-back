@@ -96,7 +96,7 @@ const getLoggedUser = async (req, res, next) => {
 
   } catch (error) {
     res.json({ error: error.message });
-    console.log({ error: error.message });
+    
   }
 };
 
