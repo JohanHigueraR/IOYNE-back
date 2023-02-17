@@ -59,7 +59,7 @@ var loginAttempt = 0;
 var bloqueados = [];
 
 
-const getLoggedUser = async (req, res, next) => {
+/* const getLoggedUser = async (req, res, next) => {
 
   var SHA1 = new Hashes.SHA1();
 
@@ -82,23 +82,83 @@ const getLoggedUser = async (req, res, next) => {
       res.json("cuenta bloqueada por dos horas")
     }
 
+    var errorEmail = false
     users.rows.map((row) => {
-      if (us_email == row.us_email && !bloqueados.includes(us_email)) {
+        if(us_email !== row.us_email){
+          errorEmail =true
+        }
+       if (us_email == row.us_email && !bloqueados.includes(us_email)) {
         if (row.us_password == SHA1.hex(us_password)) {
           var loggedUser = row;
-          res.json(loggedUser);
+          errorEmail = false
+          return res.json(loggedUser);
         } else {
           loginAttempt++;
           res.json("contraseña incorrecta");
         }
       }
     });
-
+    if(errorEmail == true){
+      res.json("usuario no registrado")
+    }
+    
   } catch (error) {
     res.json({ error: error.message });
     
   }
+}; */
+const getLoggedUser = async (req, res, next) => {
+  var SHA1 = new Hashes.SHA1();
+
+  try {
+    const { us_email, us_password } = req.body;
+    const users = await pool.query("SELECT * FROM users");
+
+    setTimeout(() => {
+      loginAttempt=0
+    }, 120000);
+
+    if (loginAttempt === 3) {   
+      bloqueados.push(us_email);
+      
+      setTimeout(() => {
+        const index = bloqueados.indexOf(us_email);
+        bloqueados.splice(index, 1);
+      }, 72000000);
+      
+      return res.json("cuenta bloqueada por dos horas");
+    }
+
+    var errorEmail = true;
+    var loggedUser = null;
+
+    users.rows.forEach((row) => {
+      if (us_email === row.us_email) {
+        errorEmail = false;
+        if (!bloqueados.includes(us_email)) {
+          if (row.us_password === SHA1.hex(us_password)) {
+            loggedUser = row;
+          } else {
+            loginAttempt++;
+            res.json("contraseña incorrecta");
+          }
+        } else {
+          res.json("cuenta bloqueada por dos horas");
+        }
+      }
+    });
+
+    if (errorEmail) {
+      res.json("usuario no registrado");
+    } else if (loggedUser) {
+      res.json(loggedUser);
+    }
+
+  } catch (error) {
+    res.json({ error: error.message });
+  }
 };
+
 
 module.exports = {
   createUser,
