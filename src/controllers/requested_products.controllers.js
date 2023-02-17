@@ -18,6 +18,7 @@ const createReqProduct = async (req, res, next) => {
     next(error);
   }
 };
+
 const deleteReqProduct = async (req, res, next) => {
   // Create a product
   const { qu_ident, product_id} = req.body;

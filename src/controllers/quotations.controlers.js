@@ -68,8 +68,8 @@ const getIdentQuotation = async (req, res, next) => {
 
     try {
         const result = await pool.query(
-            `SELECT qu_ident FROM quotations 
-            ORDER BY qu_ident DESC LIMIT 1`
+            `SELECT CAST (qu_ident AS integer) FROM quotations
+            ORDER BY qu_ident DESC limit 1`
         )
 
         return res.json(result.rows[0])
@@ -88,7 +88,7 @@ const getQuotationValueForDay = async (req, res, next) => {
         )
 
         res.json(result.rows)
-        
+
 
     } catch (error) {
         next(error)
@@ -103,23 +103,23 @@ const getQuotationForEdit = async (req, res, next) => {
     try {
         const result = await pool.query(`
         SELECT 	
-        quotations.client_id,
-        clients.cl_name,
-        clients.cl_lastname,
-        clients.cl_email,
-        clients.cl_address,
-		requested_products.quantity,
-		requested_products.product_id,
-		products.pd_name,
-		products.pd_price,
-		products.pd_description
+            quotations.client_id,
+            clients.cl_name,
+            clients.cl_lastname,
+            clients.cl_email,
+            clients.cl_address,
+            requested_products.quantity,
+            requested_products.product_id,
+            products.pd_name,
+            products.pd_price,
+            products.pd_description
         FROM quotations 
         LEFT JOIN clients 
-        ON quotations.client_id = clients.client_id
+            ON quotations.client_id = clients.client_id
         LEFT JOIN requested_products 
-        ON   quotations.qu_ident = requested_products.qu_ident
+            ON   quotations.qu_ident = requested_products.qu_ident
         LEFT JOIN products
-        ON requested_products.product_id = products.product_id
+            ON requested_products.product_id = products.product_id
         WHERE quotations.qu_ident = $1`, [qu_ident]
         )
 
