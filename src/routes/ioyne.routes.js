@@ -50,7 +50,7 @@ const {
 
 // EMAIL CONTROLLER
 
-const { createEmail } = require('../controllers/email.controller')
+const { createEmailPdf } = require('../controllers/email.controller')
 
 
 //---------------------------------------------ROUTES----------------------------------------//
@@ -109,7 +109,8 @@ router.put('/login', getLoggedUser)
 
 
 // EMAIL ROUTE
-router.post('/email', createEmail)
+
+router.post('/emailpdf', createEmailPdf)
 
 
 
